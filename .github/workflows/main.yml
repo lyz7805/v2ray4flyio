@@ -12,6 +12,7 @@ jobs:
       - uses: superfly/flyctl-actions@1.1
         with:
           args: "secrets set UUID=${{ secrets.UUID }}"
+        continue-on-error: true
       - uses: superfly/flyctl-actions@1.1
         with:
           args: "regions set hkg"
