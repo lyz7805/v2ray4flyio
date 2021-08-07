@@ -10,7 +10,7 @@
 2. 修改`fly.toml`文件中的`app`名称
 
 ## 部署
-只要配置 GitHub Actions，将代替推送到仓库即可自动部署
+只要配置 GitHub Actions，将代码推送到仓库即可自动部署
 
 ## 客户端连接
 * 协议（protocol） - vmess
