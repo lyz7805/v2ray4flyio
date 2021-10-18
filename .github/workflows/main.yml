@@ -18,10 +18,11 @@ jobs:
         with:
           args: "secrets set UUID=${{ secrets.UUID }}"
         continue-on-error: true
+      - name: Flyctl deploy app
+        uses: superfly/flyctl-actions@master
+        with:
+          args: "deploy"
       - name: Flyctl set region - hkg(Hong Kong)
         uses: superfly/flyctl-actions@master
         with:
           args: "regions set hkg"
-      - uses: superfly/flyctl-actions@master
-        with:
-          args: "deploy"
