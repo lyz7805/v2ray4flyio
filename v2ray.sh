@@ -5,7 +5,7 @@ ARCH="64"
 DOWNLOAD_PATH="/tmp/v2ray"
 
 mkdir -p ${DOWNLOAD_PATH}
-cd ${DOWNLOAD_PATH}
+cd ${DOWNLOAD_PATH} || exit
 
 TAG=$(wget --no-check-certificate -qO- https://api.github.com/repos/v2fly/v2ray-core/releases/latest | grep 'tag_name' | cut -d\" -f4)
 if [ -z "${TAG}" ]; then
@@ -20,8 +20,8 @@ echo "Downloading binary file: ${V2RAY_FILE}"
 echo "Downloading binary file: ${DGST_FILE}"
 
 # TAG=$(wget -qO- https://raw.githubusercontent.com/v2fly/docker/master/ReleaseTag | head -n1)
-wget -O ${DOWNLOAD_PATH}/v2ray.zip https://github.com/v2fly/v2ray-core/releases/download/${TAG}/${V2RAY_FILE} > /dev/null 2>&1
-wget -O ${DOWNLOAD_PATH}/v2ray.zip.dgst https://github.com/v2fly/v2ray-core/releases/download/${TAG}/${DGST_FILE} > /dev/null 2>&1
+wget -O ${DOWNLOAD_PATH}/v2ray.zip https://github.com/v2fly/v2ray-core/releases/download/${TAG}/${V2RAY_FILE} >/dev/null 2>&1
+wget -O ${DOWNLOAD_PATH}/v2ray.zip.dgst https://github.com/v2fly/v2ray-core/releases/download/${TAG}/${DGST_FILE} >/dev/null 2>&1
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to download binary file: ${V2RAY_FILE} ${DGST_FILE}" && exit 1
@@ -30,7 +30,7 @@ echo "Download binary file: ${V2RAY_FILE} ${DGST_FILE} completed"
 
 # Check SHA512
 LOCAL=$(openssl dgst -sha512 v2ray.zip | sed 's/([^)]*)//g')
-STR=$(cat v2ray.zip.dgst | grep 'SHA512' | head -n1)
+STR=$(cat < v2ray.zip.dgst | grep 'SHA512' | head -n1)
 
 if [ "${LOCAL}" = "${STR}" ]; then
     echo " Check passed" && rm -fv v2ray.zip.dgst
@@ -46,7 +46,7 @@ mv geosite.dat geoip.dat /usr/local/share/v2ray/
 # mv config.json /etc/v2ray/config.json
 
 # Set config file
-cat << EOF > /etc/v2ray/config.json
+cat <<EOF >/etc/v2ray/config.json
 {
     "log": {
         "loglevel": "warning"
@@ -79,8 +79,8 @@ cat << EOF > /etc/v2ray/config.json
 EOF
 
 # Clean
-cd ~
-rm -rf ${DOWNLOAD_PATH}/*
+cd ~ || return
+rm -rf ${DOWNLOAD_PATH:?}/*
 echo "Install done"
 
 echo "--------------------------------"
