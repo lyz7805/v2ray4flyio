@@ -16,7 +16,7 @@ if [ "$(flyctl info --app "${APP_NAME}" | grep -o "Could not resolve App")" = "C
     printf '\e[33mCould not resolve app. Next, create the App.\n\e[0m'
     flyctl apps create "${APP_NAME}"
 
-    if [ "$(flyctl info --app "${APP_NAME}" | grep -o "Could not resolve App")" = "Could not resolve App" ]; then
+    if [ "$(flyctl info --app "${APP_NAME}" | grep -o "Could not resolve App")" != "Could not resolve App" ]; then
         printf '\e[32mCreate app success.\n\e[0m'
     else
         printf '\e[31mCreate app failed.\n\e[0m' && exit 1
