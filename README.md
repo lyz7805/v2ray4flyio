@@ -16,7 +16,7 @@
 * 地址（address） - [APP_NAME].fly.dev
 * 端口（port） - 443
 * 用户ID（id） - [UUID]
-* 额外ID（alterId） - 64
+* 额外ID（alterId） - 0 （！！！）
 * 传输协议（network） - ws
 * 底层传输安全（tls) - tls
 
@@ -35,7 +35,7 @@
             "users": [
               {
                 "id": "[UUID]",
-                "alterId": 64,
+                "alterId": 0,
                 "security": "auto"
               }
             ]
